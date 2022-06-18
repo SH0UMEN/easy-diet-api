@@ -1,6 +1,14 @@
 from django.db import models
-from .model import Product
+from food.models import Category
 from food.choices import Lang
+
+
+class Product(models.Model):
+	category = models.ForeignKey(Category, on_delete=models.RESTRICT)
+	carbohydrate = models.FloatField()
+	protein = models.FloatField()
+	fat = models.FloatField()
+	kcal = models.IntegerField()
 
 
 class ProductTranslation(models.Model):

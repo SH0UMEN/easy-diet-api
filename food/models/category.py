@@ -1,6 +1,9 @@
 from django.db import models
-from .model import Category
 from food.choices import Lang
+
+
+class Category(models.Model):
+	pass
 
 
 class CategoryTranslation(models.Model):
