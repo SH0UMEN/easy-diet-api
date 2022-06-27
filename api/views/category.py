@@ -1,13 +1,9 @@
-from rest_framework.response import Response
-from rest_framework.views import APIView
+from rest_framework.generics import ListAPIView
 
 from food.models import Category
 from api.serializers.category import CategorySerializer
 
 
-class CategoriesView(APIView):
-    def get(self, request):
-        queryset = Category.objects.all()
-        serializer = CategorySerializer(instance=queryset, many=True)
-
-        return Response(serializer.data)
+class CategoriesView(ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
