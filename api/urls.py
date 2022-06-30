@@ -1,7 +1,10 @@
-from django.urls import path
+from django.urls import path, include
+
 from .views import CategoriesView, ProductsView, DishesView, DishView, MenusView, MenuView
 
 urlpatterns = [
+	path('auth/', include('rest_framework.urls')),
+
 	path('categories/', CategoriesView.as_view()),
 	path('products/', ProductsView.as_view()),
 
