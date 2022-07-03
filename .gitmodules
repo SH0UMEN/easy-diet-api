@@ -1,0 +1,3 @@
+[submodule "easy-diet-frontend"]
+	path = easy-diet-frontend
+	url = https://github.com/SH0UMEN/easy-diet-frontend
