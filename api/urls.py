@@ -1,9 +1,9 @@
 from django.urls import re_path, include
-
-from .views import CategoriesView, ProductsView, DishesView, DishView, MenusView, MenuView
+from .views import CategoriesView, ProductsView, DishesView, DishView, MenusView, MenuView, login_view, logout_view
 
 urlpatterns = [
-	re_path(r'auth\/?', include('rest_framework.urls')),
+	re_path(r'auth/login\/?', login_view),
+	re_path(r'auth/logout\/?', logout_view),
 
 	re_path(r'categories\/?$', CategoriesView.as_view()),
 	re_path(r'products\/?$', ProductsView.as_view()),
