@@ -1,5 +1,5 @@
 from django.contrib.auth import login, logout, authenticate
-from django.http import HttpResponseForbidden, HttpResponse
+from django.http import HttpResponseBadRequest, HttpResponse
 from django.views.decorators.http import require_POST, require_GET
 from django.http import JsonResponse
 from api.serializers.user import UserSerializer
@@ -12,7 +12,7 @@ def login_view(request):
 	user = authenticate(request, username=data['username'], password=data['password'])
 
 	if user is None:
-		return HttpResponseForbidden()
+		return HttpResponseBadRequest()
 
 	login(request, user)
 
@@ -29,6 +29,6 @@ def logout_view(request):
 @require_GET
 def me_view(request):
 	if not request.user.is_authenticated:
-		return HttpResponseForbidden()
+		return HttpResponse(status=401)
 
 	return JsonResponse(UserSerializer(instance=request.user).data)
