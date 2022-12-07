@@ -4,10 +4,10 @@ from .product import Product
 
 
 class Dish(models.Model):
-	products = models.ManyToManyField(Product)
+	dish_product_relations = models.ManyToManyField(Product, through='DishProduct', blank=True)
+	author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+	image = models.ImageField(upload_to='static/dish_images', null=True)
 	title = models.CharField(max_length=30)
-	author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
-	image = models.ImageField(upload_to='dish_images')
 
 	def save_model(self, request, obj, form, change):
 		if not obj.pk:
