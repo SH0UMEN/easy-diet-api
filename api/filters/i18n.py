@@ -6,7 +6,6 @@ class I18NSearchFilter(SearchFilter):
 	language_parameter = 'lang'
 	language_field = 'language'
 	i18n_prefix = 'i18n__'
-	language = None
 
 	def get_search_fields(self, view, request):
 		prefix = self.i18n_prefix
