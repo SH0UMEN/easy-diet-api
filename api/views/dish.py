@@ -1,7 +1,7 @@
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from food.models import Dish
-from api.serializers.dish import DishSerializer
+from api.serializers.dish.dish import DishSerializer
 from api.permissions import IsOwnerOrReadOnly
 
 

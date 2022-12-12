@@ -11,7 +11,7 @@ class DishSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 	def create(self, validated_data):
-		relations = validated_data.pop('dish_product_relations') or []
+		relations = validated_data.pop('dishproduct_set') or []
 		instance = super().create(validated_data)
 
 		for relation in relations:

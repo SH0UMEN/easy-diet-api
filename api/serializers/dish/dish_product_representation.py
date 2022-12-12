@@ -1,9 +1,9 @@
+from api.serializers.product import ProductSerializer
 from rest_framework import serializers
 from food.models import DishProduct
-from .product import ProductSerializer
 
 
-class DishProductSerializer(serializers.ModelSerializer):
+class DishProductRepresentationSerializer(serializers.ModelSerializer):
 	product = ProductSerializer()
 
 	class Meta:
