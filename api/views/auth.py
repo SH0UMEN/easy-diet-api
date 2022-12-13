@@ -10,10 +10,10 @@ import json
 
 @require_POST
 def registration_view(request):
-	data = json.loads(request.body)
+	data = request.POST
 
-	username = data['username']
-	password = data['password']
+	username = data.get('username')
+	password = data.get('password')
 
 	is_username_valid = username and 5 <= len(username) <= 14
 	is_password_valid = password and 6 <= len(password) <= 20
@@ -31,8 +31,8 @@ def registration_view(request):
 
 @require_POST
 def login_view(request):
-	data = json.loads(request.body)
-	user = authenticate(request, username=data['username'], password=data['password'])
+	data = request.POST
+	user = authenticate(request, username=data.get('username'), password=data.get('password'))
 
 	if user is None:
 		return HttpResponseBadRequest(Error.UserNotFound)
