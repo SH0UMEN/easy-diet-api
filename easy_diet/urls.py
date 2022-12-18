@@ -14,6 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import include, re_path
 from django.shortcuts import render
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -28,3 +30,5 @@ urlpatterns = [
     re_path('api\/?', include('api.urls')),
     re_path(r'^.*', index_view)
 ]
+
+urlpatterns.insert(2, static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)[0])

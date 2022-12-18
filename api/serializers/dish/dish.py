@@ -2,6 +2,7 @@ from .dish_product import DishProductSerializer
 from api.serializers.user import UserSerializer
 from rest_framework import serializers
 from food.models import Dish, DishProduct
+from rest_framework.filters import BaseFilterBackend
 
 
 class DishSerializer(serializers.ModelSerializer):

@@ -8,7 +8,7 @@ class Menu(models.Model):
 	title = models.CharField(max_length=30)
 	parent = models.ForeignKey('self', on_delete=models.CASCADE)
 	author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
-	image = models.ImageField(upload_to='menu_images')
+	image = models.ImageField(upload_to='menus')
 
 	def save_model(self, request, obj, form, change):
 		if not obj.pk:

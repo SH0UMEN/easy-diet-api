@@ -9,6 +9,7 @@ class DishesView(ListCreateAPIView):
     queryset = Dish.objects.all()
     serializer_class = DishSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+    filterset_fields = ['author']
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
