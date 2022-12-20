@@ -2,7 +2,7 @@ from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIV
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAdminUser
 from rest_framework.filters import OrderingFilter
 from api.serializers.dish.dish import DishSerializer
-from api.permissions import IsOwnerOrReadOnly
+from api.permissions import IsOwnerOrAdminOrReadOnly
 from food.models import Dish
 
 
@@ -22,4 +22,4 @@ class DishesView(ListCreateAPIView):
 class DishView(RetrieveUpdateDestroyAPIView):
     queryset = Dish.objects.all()
     serializer_class = DishSerializer
-    permission_classes = [IsAdminUser, IsOwnerOrReadOnly]
+    permission_classes = [IsOwnerOrAdminOrReadOnly]

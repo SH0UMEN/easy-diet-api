@@ -139,7 +139,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
 
     'DEFAULT_RENDERER_CLASSES': (
-        'api.render.CamelCaseJSONStatusRenderer',
+        'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
         'djangorestframework_camel_case.render.CamelCaseBrowsableAPIRenderer',
     ),
 
