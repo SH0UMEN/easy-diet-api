@@ -20,3 +20,15 @@ class DishSerializer(serializers.ModelSerializer):
 			DishProduct.objects.create(dish=instance, **relation)
 
 		return instance
+
+	def update(self, instance, validated_data):
+		relations = validated_data.pop('dishproduct_set', None)
+		instance = super().update(instance, validated_data)
+
+		if relations is not None:
+			DishProduct.objects.filter(dish_id=instance.id).delete()
+
+			for relation in relations:
+				DishProduct.objects.create(dish=instance, **relation)
+
+		return instance
