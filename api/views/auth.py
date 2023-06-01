@@ -5,7 +5,6 @@ from django.views.decorators.http import require_POST, require_GET
 from django.http import JsonResponse
 from api.serializers.user import UserSerializer
 from api.error import Error
-import json
 
 
 @require_POST

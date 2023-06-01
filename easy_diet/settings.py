@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+
+import openai
+
 from config import *
 import os
 
@@ -33,16 +36,17 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'food',
-    'api',
     'rest_framework',
-    'django_filters'
+    'django_filters',
+    'food',
+    'api'
 ]
 
 MIDDLEWARE = [
@@ -76,8 +80,10 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'easy_diet.wsgi.application'
+# WSGI_APPLICATION = 'easy_diet.wsgi.application'
+# Channels
 
+ASGI_APPLICATION = "easy_diet.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -163,3 +169,5 @@ SESSION_COOKIE_HTTPONLY = True
 if not DEBUG:
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
+
+openai.api_key = GPT_KEY

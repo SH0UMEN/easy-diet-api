@@ -1,5 +1,10 @@
 from django.urls import re_path
+from .ai.gpt import GPT
 from .views import *
+
+websocket_urlpatterns = [
+	re_path(r'api/ai/text\/?$', GPT.as_asgi())
+]
 
 urlpatterns = [
 	re_path(r'auth/registration\/?', registration_view),
