@@ -4,14 +4,7 @@ from .dish import Dish
 
 
 class Menu(models.Model):
-	dishes = models.ManyToManyField(Dish)
+	menu_dish_relations = models.ManyToManyField(Dish, through='MenuDish', blank=True)
 	title = models.CharField(max_length=30)
-	parent = models.ForeignKey('self', on_delete=models.CASCADE)
-	author = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+	author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 	image = models.ImageField(upload_to='menus')
-
-	def save_model(self, request, obj, form, change):
-		if not obj.pk:
-			obj.author = request.user
-
-		super().save_model(request, obj, form, change)
