@@ -1,6 +1,6 @@
 from asgiref.sync import sync_to_async
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
-from food.models import ProductTranslation
+from food.models import ProductTranslation, Dish
 from .prompts import prompts
 import openai
 import asyncio
@@ -41,6 +41,8 @@ class GPT(AsyncJsonWebsocketConsumer):
 
         if model == 'dish':
             ingredients = await sync_to_async(list)(ProductTranslation.objects.filter(product__in=ingredients, language=language))
+        elif model == 'menu':
+            ingredients = await sync_to_async(list)(Dish.objects.filter(id__in=ingredients))
 
         ingredients = [ingredient.title for ingredient in ingredients]
 

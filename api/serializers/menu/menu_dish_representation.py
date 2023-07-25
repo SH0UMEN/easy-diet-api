@@ -1,11 +1,11 @@
-from api.serializers import DishSerializer
+from api.serializers import DishShortSerializer
 from rest_framework import serializers
 from food.models import MenuDish
 
 
 class MenuDishRepresentationSerializer(serializers.ModelSerializer):
-	dish = DishSerializer()
+	dish = DishShortSerializer()
 
 	class Meta:
 		model = MenuDish
-		fields = ['product', 'grams']
+		fields = ['dish', 'quantity']

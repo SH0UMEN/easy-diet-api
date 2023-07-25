@@ -2,9 +2,10 @@ from .dish_product import DishProductSerializer
 from api.serializers.user import UserSerializer
 from rest_framework import serializers
 from food.models import Dish, DishProduct
+from ..scorable import ScorableSerializer
 
 
-class DishSerializer(serializers.ModelSerializer):
+class DishSerializer(serializers.ModelSerializer, ScorableSerializer):
 	dish_product_relations = DishProductSerializer(source='dishproduct_set', many=True, required=False)
 	author = UserSerializer(required=False)
 

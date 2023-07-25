@@ -2,10 +2,11 @@ from .menu_dish import MenuDishSerializer
 from api.serializers.user import UserSerializer
 from rest_framework import serializers
 from food.models import Menu, MenuDish
+from ..scorable import ScorableSerializer
 
 
-class MenuSerializer(serializers.ModelSerializer):
-	dish_product_relations = MenuDishSerializer(source='menudish_set', many=True, required=False)
+class MenuSerializer(serializers.ModelSerializer, ScorableSerializer):
+	menu_dish_relations = MenuDishSerializer(source='menudish_set', many=True, required=False)
 	author = UserSerializer(required=False)
 
 	class Meta:
@@ -17,7 +18,7 @@ class MenuSerializer(serializers.ModelSerializer):
 		instance = super().create(validated_data)
 
 		for relation in relations:
-			MenuDish.objects.create(meny=instance, **relation)
+			MenuDish.objects.create(menu=instance, **relation)
 
 		return instance
 

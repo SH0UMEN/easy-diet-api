@@ -1,10 +1,15 @@
-from django.urls import re_path
+from django.urls import re_path, path, include
 from .ai.gpt import GPT
+from .router import RouterWithOptionalSlash
 from .views import *
 
 websocket_urlpatterns = [
 	re_path(r'api/ai/text\/?$', GPT.as_asgi())
 ]
+
+router = RouterWithOptionalSlash()
+router.register(r'dishes', DishesViewSet)
+router.register(r'menus', MenusViewSet)
 
 urlpatterns = [
 	re_path(r'auth/registration\/?', registration_view),
@@ -15,9 +20,5 @@ urlpatterns = [
 	re_path(r'categories\/?$', CategoriesView.as_view()),
 	re_path(r'products\/?$', ProductsView.as_view()),
 
-	re_path(r'dishes\/?$', DishesView.as_view()),
-	re_path(r'dishes/(?P<pk>\d+)\/?$', DishView.as_view()),
-
-	re_path(r'menus\/?$', MenusView.as_view()),
-	re_path(r'menus/(?P<pk>\d+)\/?$', MenuView.as_view()),
+	path('', include(router.urls))
 ]
