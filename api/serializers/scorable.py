@@ -1,6 +1,6 @@
-from rest_framework.fields import SerializerMethodField, IntegerField, DecimalField, FloatField
+from rest_framework.fields import SerializerMethodField, IntegerField, FloatField
+from django.db.models import ObjectDoesNotExist
 from rest_framework import serializers
-from django.db import models
 
 
 class ScorableSerializer(metaclass=serializers.SerializerMetaclass):
@@ -13,5 +13,5 @@ class ScorableSerializer(metaclass=serializers.SerializerMetaclass):
 
 		try:
 			return record.scores.get(user_id=user.id).value
-		except models.ObjectDoesNotExist:
+		except ObjectDoesNotExist:
 			return 0

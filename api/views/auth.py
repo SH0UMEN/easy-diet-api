@@ -1,31 +1,62 @@
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest, HttpResponse
+from django.contrib.auth import get_user_model
+from django.http import HttpResponseBadRequest, HttpResponse, JsonResponse
 from django.views.decorators.http import require_POST, require_GET
-from django.http import JsonResponse
+from django.utils.crypto import get_random_string
+from django.core.mail import send_mail
+from django.db.models import ObjectDoesNotExist
 from api.serializers.user import UserSerializer
 from api.error import Error
+from config import *
+import base64
 
 
 @require_POST
 def registration_view(request):
 	data = request.POST
 
-	username = data.get('username')
-	password = data.get('password')
+	serializer = UserSerializer(data=data)
+	serializer.is_valid(raise_exception=True)
 
-	is_username_valid = username and 5 <= len(username) <= 14
-	is_password_valid = password and 6 <= len(password) <= 20
-
-	if not is_password_valid or not is_username_valid:
-		return HttpResponseBadRequest(Error.DataNotValid)
+	data = serializer.validated_data
 
 	try:
-		user = User.objects.create_user(username=username, password=password)
+		user = get_user_model().objects.create_user(username=data['username'], password=data['password'], email=data['email'], code=get_random_string(32))
 	except BaseException:
 		return HttpResponseBadRequest(Error.UsernameIsBusy)
 
-	return JsonResponse(UserSerializer(instance=user).data)
+	code = str(user.id) + ':' + user.code
+	code = base64.b64encode(code.encode('ascii'))
+	url = request.build_absolute_uri('/') + 'auth/verify/' + code.decode('ascii')
+
+	try:
+		send_mail('Easy Diet registration', url, 'Easy Diet', [data['email']], fail_silently=False)
+	except BaseException:
+		user.delete()
+		return HttpResponseBadRequest(Error.DataNotValid)
+
+	return HttpResponse(status=200)
+
+
+@require_POST
+def verify_view(request):
+	code = request.POST.get('code')
+
+	if code is None:
+		return HttpResponseBadRequest()
+
+	code = base64.b64decode(code.encode('ascii')).decode('ascii')
+	id, code = code.split(':')
+
+	try:
+		user = get_user_model().objects.get(id=id, code=code)
+	except ObjectDoesNotExist:
+		return HttpResponseBadRequest()
+
+	user.code = None
+	user.save()
+
+	return HttpResponse(status=200)
 
 
 @require_POST
@@ -35,6 +66,8 @@ def login_view(request):
 
 	if user is None:
 		return HttpResponseBadRequest(Error.UserNotFound)
+	elif user.code is not None:
+		return HttpResponseBadRequest(Error.UserIsNotActive)
 
 	login(request, user)
 

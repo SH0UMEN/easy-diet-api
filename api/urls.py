@@ -15,6 +15,7 @@ urlpatterns = [
 	re_path(r'auth/registration\/?', registration_view),
 	re_path(r'auth/login\/?', login_view),
 	re_path(r'auth/logout\/?', logout_view),
+	re_path(r'auth/verify\/?', verify_view),
 	re_path(r'auth/me\/?', me_view),
 
 	re_path(r'categories\/?$', CategoriesView.as_view()),
