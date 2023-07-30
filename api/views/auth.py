@@ -27,7 +27,7 @@ def registration_view(request):
 
 	code = str(user.id) + ':' + user.code
 	code = base64.b64encode(code.encode('ascii'))
-	url = HOST + '/auth/verify/' + code.decode('ascii')
+	url = request.build_absolute_uri('/') + 'auth/verify/' + code.decode('ascii')
 
 	try:
 		send_mail('Easy Diet registration', url, 'Easy Diet', [data['email']], fail_silently=False)
