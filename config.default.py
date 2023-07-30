@@ -8,3 +8,4 @@ GPT_KEY = ''
 GMAIL_USER = 'example@gmail.com'
 GMAIL_PASSWORD = 'gmail_password'
 IS_DEBUG = False
+HOST = 'localhost'
