@@ -31,4 +31,5 @@ urlpatterns = [
     re_path(r'^.*', index_view)
 ]
 
-urlpatterns.insert(2, static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)[0])
+if(settings.DEBUG)
+	urlpatterns.insert(2, static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)[0])
