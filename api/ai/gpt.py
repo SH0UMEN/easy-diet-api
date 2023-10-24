@@ -25,7 +25,7 @@ class GPT(AsyncJsonWebsocketConsumer):
         except openai.error.RateLimitError:
             return await self.send_json({'id': content['id'], 'error': True, 'status': 429})
 
-    @backoff.on_exception(backoff.expo, openai.error.RateLimitError, max_tries=10)
+    @backoff.on_exception(backoff.expo, openai.error.RateLimitError, max_tries=4)
     async def handle(self, content):
         ingredients = content['ingredients']
         handler_id = content['id']
