@@ -1,0 +1,33 @@
+name: Easy Diet Deploy
+
+on:
+  push:
+    branches: [ "test" ]
+  pull_request:
+    branches: [ "test" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    environment: master
+    
+    steps:
+    - uses: actions/checkout@v3
+    - name: Deploy to Staging server
+      uses: easingthemes/ssh-deploy@main
+      with:
+        SSH_PRIVATE_KEY: "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"
+        ARGS: "-rlgoDzvc -i"
+        SOURCE: "/"
+        REMOTE_HOST: "213.171.6.213"
+        REMOTE_USER: "root"
+        TARGET: "/var/www/easy_diet_test"
+        EXCLUDE: "/frontend/"
+        SCRIPT_BEFORE: |
+          whoami
+          ls -al
+        SCRIPT_AFTER: |
+          whoami
+          ls -al
+          echo $RSYNC_STDOUT
