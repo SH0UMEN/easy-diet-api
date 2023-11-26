@@ -20,6 +20,6 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
         ssh-keyscan -H ${{ secrets.REMOTE_HOST }} > ~/.ssh/known_hosts
     - name: connect and pull
-      run: ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "cd /var/www/easy_diet && git checkout master && git pull && exit"
+      run: ssh ${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST }} "cd /var/www/ && rm -R easy_diet_test && git clone ${{ github.repository }} easy_diet_test && git checkout master && git pull && exit"
     - name: cleanup
       run: rm -rf ~/.ssh
