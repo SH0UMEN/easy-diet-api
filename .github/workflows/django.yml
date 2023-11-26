@@ -20,9 +20,9 @@ jobs:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         ARGS: "-rlgoDzvc -i"
         SOURCE: "/"
-        REMOTE_HOST: "213.171.6.213"
-        REMOTE_USER: "root"
-        TARGET: "/var/www/easy_diet_test"
+        REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+        REMOTE_USER: ${{ secrets.REMOTE_USER }}
+        TARGET: ${{ secrets.REMOTE_DIRECTORY }}
         EXCLUDE: "/frontend/"
         SCRIPT_BEFORE: |
           whoami
